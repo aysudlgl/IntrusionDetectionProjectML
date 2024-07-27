@@ -12,9 +12,6 @@ from keras.callbacks import ModelCheckpoint
 
 #Load the dataset
 
-kdd_Train = pd.read_csv('KDDTrain.csv')
-kdd_Test = pd.read_csv('KDDTest.csv')
-
 train_path = r'C:\Users\wtene\OneDrive\Documents\USM\CCS691\KDDTrain.csv'
 test_path = r'C:\Users\wtene\OneDrive\Documents\USM\CCS691\KDDTest.csv'
 
@@ -35,6 +32,8 @@ test = pd.read_csv(test_path, header=None, names = column_names)
 
 print('Training set: ', train.shape)
 print('Test set: ', test.shape)
+
+train.head(5)
 
 #Explore dataset
 print('Label Count for Training Set: ')
