@@ -252,6 +252,68 @@ y_test_binary = to_categorical(Y_Test)
 
 
 
+###############################
+#DEEP NEURAL NETWORK MODEL(DNN)
+###############################
+
+#Create the neural network
+
+dnn = Sequential()
+dnn.add(Dense(units=512, activation='relu'))
+dnn.add(BatchNormalization())
+dnn.add(Dropout(0.3))
+dnn.add(Dense(units=256, activation='relu'))
+dnn.add(BatchNormalization())
+dnn.add(Dropout(0.2))
+dnn.add(Dense(units=128, activation='relu'))
+dnn.add(BatchNormalization())
+dnn.add(Dense(units=10, kernel_initializer='normal'))
+dnn.add(Dense(units=2, activation='softmax'))
+
+dnn.compile(optimizer='adam', loss='binary_crossentropy',metrics=['accuracy'])
+
+monitor = EarlyStopping(monitor='val_loss', min_delta=1e-3, patience=3, verbose=1, mode='auto')
+checkpointer = ModelCheckpoint(filepath="modeldnn.h5", verbose=0, save_best_only=True)
+
+dnn.fit(X_Train, y_binary, epochs=50, batch_size=128, verbose=1, validation_split=0.1)
+
+loss, results = dnn.evaluate(X_Test, Y_Test, verbose=1)
+
+print(f'Test loss: {loss}')
+print(f'Test accuracy: {results}')
+
+#Precision, Recall, FI-Score, and ROC-AUC
+from sklearn.metrics import classification_report, accuracy_score, roc_auc_score, confusion_matrix, roc_curve
+
+#predict probabiliites for test set
+y_prediction = dnn.predict(X_Test, verbose=0)
+y_pred_classes = np.argmax(y_prediction, axis=1)
+
+y_true_classes = Y_Test
+
+#accuracy, precision, recall, F1-score
+accuracy = accuracy_score(y_true_classes, y_pred_classes)
+print(f'Accuracy: {accuracy *100:.2f}%')
+
+print(classification_report(y_true_classes, y_pred_classes))
+
+#ROC_AUC
+auc = roc_auc_score(y_true_classes, y_pred_classes)
+print(f'ROC AUC: {auc *100:.2f}%', '\n')
+
+confusion = confusion_matrix(y_true_classes, y_pred_classes)
+print('Confusion:')
+print(confusion)
+
+
+import seaborn as sns
+
+axes = sns.heatmap(confusion, annot=True, cmap='nipy_spectral_r')
+
+
+
+
+
 
 
 
