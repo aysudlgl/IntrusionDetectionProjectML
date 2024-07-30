@@ -23,8 +23,8 @@ column_names = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
     'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate', 
     'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'label']
 
-train = pd.read_csv("KkdTrain.csv", header=None, names = column_names)
-test = pd.read_csv("KkdTest.csv", header=None, names = column_names)
+train = pd.read_csv("KDDTrain.csv", header=None, names = column_names)
+test = pd.read_csv("KDDTest.csv", header=None, names = column_names)
 
 print('Training set: ', train.shape)
 print('Test set: ', test.shape)
