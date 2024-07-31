@@ -182,14 +182,19 @@ labelTest=newTest['label']
 pd.set_option('future.no_silent_downcasting', True)
 
 # change the label column
-newlabeldf=labeldf.replace({ 'normal' : 0, 'neptune' : 1 ,'back': 1, 'land': 1, 'pod': 1, 'smurf': 1, 'teardrop': 1,'mailbomb': 1, 'apache2': 1, 'processtable': 1, 'udpstorm': 1, 'worm': 1,
-                           'ipsweep' : 2,'nmap' : 2,'portsweep' : 2,'satan' : 2,'mscan' : 2,'saint' : 2
-                           ,'ftp_write': 3,'guess_passwd': 3,'imap': 3,'multihop': 3,'phf': 3,'spy': 3,'warezclient': 3,'warezmaster': 3,'sendmail': 3,'named': 3,'snmpgetattack': 3,'snmpguess': 3,'xlock': 3,'xsnoop': 3,'httptunnel': 3,
-                           'buffer_overflow': 4,'loadmodule': 4,'perl': 4,'rootkit': 4,'ps': 4,'sqlattack': 4,'xterm': 4})
-newlabeldf_test=labeldf_test.replace({ 'normal' : 0, 'neptune' : 1 ,'back': 1, 'land': 1, 'pod': 1, 'smurf': 1, 'teardrop': 1,'mailbomb': 1, 'apache2': 1, 'processtable': 1, 'udpstorm': 1, 'worm': 1,
-                           'ipsweep' : 2,'nmap' : 2,'portsweep' : 2,'satan' : 2,'mscan' : 2,'saint' : 2
-                           ,'ftp_write': 3,'guess_passwd': 3,'imap': 3,'multihop': 3,'phf': 3,'spy': 3,'warezclient': 3,'warezmaster': 3,'sendmail': 3,'named': 3,'snmpgetattack': 3,'snmpguess': 3,'xlock': 3,'xsnoop': 3,'httptunnel': 3,
-                           'buffer_overflow': 4,'loadmodule': 4,'perl': 4,'rootkit': 4,'ps': 4,'sqlattack': 4,'xterm': 4})
+newlabeldf=labeldf.replace({ 'normal' : 0, 'neptune' : 1 ,'back': 1, 'land': 1, 'pod': 1, 'smurf': 1,
+                            'teardrop': 1,'mailbomb': 1, 'apache2': 1, 'processtable': 1, 'udpstorm': 1,
+                              'worm': 1, 'ipsweep' : 1,'nmap' : 1,'portsweep' : 1,'satan' : 1,'mscan' : 1,
+                              'saint' : 1, 'ftp_write': 1,'guess_passwd': 1,'imap': 1,'multihop': 1,'phf': 1,
+                              'spy': 1,'warezclient': 1,'warezmaster': 1,'sendmail': 1,'named': 1,'snmpgetattack': 1,
+                              'snmpguess': 1,'xlock': 1,'xsnoop': 1,'httptunnel': 1,'buffer_overflow': 1,'loadmodule': 1,
+                              'perl': 1,'rootkit': 1,'ps': 1,'sqlattack': 1,'xterm': 1 })
+newlabeldf_test=labeldf_test.replace({'normal' : 0, 'neptune' : 1 ,'back': 1, 'land': 1, 'pod': 1, 'smurf': 1, 'teardrop': 1,
+                                        'mailbomb': 1, 'apache2': 1, 'processtable': 1, 'udpstorm': 1, 'worm': 1,'ipsweep' : 1,
+                                        'nmap' : 1,'portsweep' : 1,'satan' : 1,'mscan' : 1,'saint' : 1,'ftp_write': 1,'guess_passwd': 1,
+                                        'imap': 1,'multihop': 1,'phf': 1,'spy': 1,'warezclient': 1,'warezmaster': 1,'sendmail': 1,
+                                        'named': 1,'snmpgetattack': 1,'snmpguess': 1,'xlock': 1,'xsnoop': 1,'httptunnel': 1,
+                                        'buffer_overflow': 1,'loadmodule': 1,'perl': 1,'rootkit': 1,'ps': 1,'sqlattack': 1,'xterm': 1})
 
 # put the new label column back
 newdf['label'] = newlabeldf
@@ -243,9 +248,8 @@ X_Df = x.drop('label', axis=1)
 Y_Df = newdf.label
 
 # test set
-X_Df_test = x_test.drop('label', axis=1)
+XDf_test = x_test.drop('label', axis=1) #Had to change variable name. It was picking up shape of X_Df. Not sure how.
 Y_Df_test = newdf_test.label
-
 
 X_Df.shape
 
@@ -254,16 +258,16 @@ X_Df.shape
 #columns saved for later use
 
 colNames = list(X_Df)
-colNames_test = list(X_Df_test)
+colNames_test = list(XDf_test)
 
 scaler1 = preprocessing.StandardScaler().fit(X_Df)
 X_Df=scaler1.transform(X_Df)
 
 #test data
-scaler2 = preprocessing.StandardScaler().fit(X_Df_test)
-X_Df_test=scaler2.transform(X_Df_test)
+scaler2 = preprocessing.StandardScaler().fit(XDf_test)
+X_Df_test=scaler2.transform(XDf_test)
 
-X_Df_test = X_Df.astype('float32')
+XDf_test = XDf_test.astype('float32') #corrected from X_Df_test = X_Df.astype nevermind. Had to change variable name to XDF_test due to mishap with X_Df
 Y_Df_test= Y_Df_test.astype('float32')
 
 
