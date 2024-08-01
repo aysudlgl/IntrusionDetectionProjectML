@@ -473,15 +473,12 @@ DNN
 #Create the neural network
 
 dnn = Sequential()
-dnn.add(Dense(units=512, activation='relu', input_shape=(X_Df.shape[1],)))
-dnn.add(BatchNormalization())
-dnn.add(Dropout(0.4))
 dnn.add(Dense(units=256, activation='relu'))
 dnn.add(BatchNormalization())
-dnn.add(Dropout(0.3))
+dnn.add(Dropout(0.2))
 dnn.add(Dense(units=128, activation='relu'))
 dnn.add(BatchNormalization())
-dnn.add(Dropout(0.3))
+dnn.add(Dropout(0.14))
 dnn.add(Dense(units=5, activation='softmax'))
 
 
